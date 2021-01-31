@@ -1,0 +1,5 @@
+
+{
+    "API_all" : "https://short-link-api-app-01.herokuapp.com/",
+    "API_submit" : "https://short-link-api-app-01.herokuapp.com/submit"   
+}
