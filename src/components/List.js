@@ -37,12 +37,12 @@ function List({ data ,action }) {
                     <h6 className="text-center mb-0">
                       <a
                         target="_blank"
-                        href={ API_all + info.shortUrl}
+                        href={API_all + info.shortUrl}
                         rel="noreferrer"
                         onClick={()=>{action.update(true)}}
                         >
                         {/* <h6 id={`short${i}`} value={window.location.origin + "/" + info.shortUrl}> */}
-                        { API_all + info.shortUrl}
+                        {API_all + info.shortUrl}
                         {/* </h6> */}
 
                       </a>
