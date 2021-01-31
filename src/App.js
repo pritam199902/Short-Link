@@ -16,7 +16,7 @@ function App() {
      .then((response)=>response.json())
      .then((data)=>{
         setIsUpdated(false);
-         console.log(data);
+       //  console.log(data); 
          setData(data.data);
        })
      }
@@ -24,7 +24,7 @@ function App() {
 
   const updateState=(flag)=>{
     setIsUpdated(flag)
-    console.log("call update");
+   // console.log("call update");
   }
 
   
