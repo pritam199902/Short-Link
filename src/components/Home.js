@@ -1,6 +1,6 @@
 import { useState } from "react";
 // import { Router, Switch, Link } from "react-router-dom";
-import { API_submit } from "../config.json";
+import { API_submit, API_all } from "../config.json";
 import { nanoid } from "nanoid";
 
 function Home({action}) {
@@ -111,14 +111,11 @@ function Home({action}) {
               <h6 className="text-center mb-0">
                 <a
                   target="_blank"
-                  href={ "http://localhost:5858/" + info.shortUrl}
+                  href={API_all + info.shortUrl}
                   rel="noreferrer"
                   >
-                  {/* <h6 id={`short${i}`} value={window.location.origin + "/" + info.shortUrl}> */}
-                  { "http://localhost:5858/" + info.shortUrl}
-                  {/* </h6> */}
-
-                </a>
+                  {API_all + info.shortUrl}
+                  </a>
                 {/* <i className="fa fa-copy px-2" style={{cursor : "copy"}} onClick={()=>copy(i)} ></i> */}
               </h6>
             </div>
