@@ -2,13 +2,33 @@ import { useState } from "react";
 // import { Router, Switch, Link } from "react-router-dom";
 import { API_submit, API_all } from "../config.json";
 import { nanoid } from "nanoid";
+import ReactLoading from "react-loading";
 
-function Home({action}) {
+function Home({ action }) {
   // data
   const [orginalUrl, setOrginalUrl] = useState("");
   const [message, setMessage] = useState();
   const [newData, setNewData] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
+  // loading bar
+  const Loading = () => {
+    return (
+      <div className="row mx-0">
+        <div className="col m-auto ">
+          <ReactLoading
+            className="m-auto"
+            type={"bars"}
+            color={"#4DD637"}
+            // height={"50%"}
+            // width={"%"}
+          />
+        </div>
+      </div>
+    );
+  };
+
+  //
   const msgType = {
     ok: "alert alert-success mb-2",
     notOk: "alert alert-warning mb-2",
@@ -30,10 +50,12 @@ function Home({action}) {
   }
 
   const handleSubmit = () => {
+    setIsLoading(true);
     if (isUrl(orginalUrl)) {
       // alert(nanoid(8))
       submit();
     } else {
+      setIsLoading(true);
       alert("Please enter a valid URL!");
       setOrginalUrl("");
     }
@@ -57,16 +79,25 @@ function Home({action}) {
       .then((res) => {
         // console.log("Res", res);
         if (res.response.ok) {
-          action.update(res.response.ok)
-          setNewData(res.data)
+          action.update(res.response.ok);
+          setNewData(res.data);
+          setIsLoading(false);
           setMessage(res.response);
-          setOrginalUrl("")
+          setOrginalUrl("");
+
+          // console.log(res);
         } else {
           setMessage(res.response);
         }
       })
       .catch((e) => {
-        console.log("err: ", e);
+        setOrginalUrl("");
+        setIsLoading(false);
+        setMessage({
+          ok: false,
+          message: "Error Internet connection!",
+        });
+        // console.log("err: ", e);
       });
   };
 
@@ -82,6 +113,7 @@ function Home({action}) {
               className="close"
               data-dismiss="alert"
               aria-label="Close"
+              onClick={()=>{setMessage()}}
             >
               <span aria-hidden="true">&times;</span>
             </button>
@@ -92,11 +124,11 @@ function Home({action}) {
   };
 
   // new item
-  const NewItem =(info)=>{
+  const NewItem = (info) => {
     return (
       <div key={info.id} className="card shadow">
         <div className="card-body py-2 px-2">
-        {Message()}
+          {/* {Message()} */}
           <div className="row mx-0">
             {/*  */}
             <div className="col-6 px-1">
@@ -113,9 +145,9 @@ function Home({action}) {
                   target="_blank"
                   href={API_all + info.shortUrl}
                   rel="noreferrer"
-                  >
+                >
                   {API_all + info.shortUrl}
-                  </a>
+                </a>
                 {/* <i className="fa fa-copy px-2" style={{cursor : "copy"}} onClick={()=>copy(i)} ></i> */}
               </h6>
             </div>
@@ -130,23 +162,23 @@ function Home({action}) {
         </div>
       </div>
     );
-  }
+  };
 
   return (
     <>
       <div className="card shadow mb-2">
-        <div className="card-body">
+        <div className="card-body py-2 px-2 ">
           <h4 style={{ color: "#686" }} className="text-center">
-            Make Your Long URL Short
+            Make Your URL Short!
           </h4>
           <div className="row m-auto mb-2">
             <div className="col-lg-10 col-md-10 col-sm-10 m-auto">
-              <div className="form-group">
+              <div className="form-group mb-1">
                 <input
                   type="url"
                   className="form-control form-control-lg"
                   id="url"
-                  placeholder="https://example.com/xyz?param=0..."
+                  placeholder="Enter URL here.."
                   value={orginalUrl}
                   onChange={handleUrlChange}
                 />
@@ -160,9 +192,11 @@ function Home({action}) {
           </div>
         </div>
       </div>
-      
+
       {/*  */}
-        { newData && NewItem(newData)}
+      {Message()}
+      {/*  */}
+      {isLoading ? Loading() : newData && NewItem(newData)}
       {/*  */}
     </>
   );

@@ -1,5 +1,5 @@
 import "./App.css";
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from "react";
 // import { Router, Switch, Link } from "react-router-dom";
 import Navbar from "./components/Nav";
 import Home from "./components/Home";
@@ -8,35 +8,39 @@ import { API_all } from "./config.json";
 
 function App() {
   const [data, setData] = useState([]);
-  const [isUpdated, setIsUpdated]= useState(true)
+  const [isUpdated, setIsUpdated] = useState(true);
+  const [error, setError] = useState(false)
 
-  useEffect(()=>{
-    if( isUpdated){
-     fetch('https://short-link-api-app-01.herokuapp.com/')
-     .then((response)=>response.json())
-     .then((data)=>{
-        setIsUpdated(false);
-       //  console.log(data); 
-         setData(data.data);
-       })
-     }
-   })
+  useEffect(() => {
+    // console.log("1...........");
+    if (isUpdated) {
+      fetch(API_all)
+        .then((response) => response.json())
+        .then((data) => {
+          setIsUpdated(false);
+          //  console.log(data);
+          setData(data.data);
+          // console.log("2...........");
+        })
+        .catch((e)=>{
+          setError(true)
+        })
+    }
+  });
 
-  const updateState=(flag)=>{
-    setIsUpdated(flag)
-   // console.log("call update");
-  }
+  const updateState = (flag) => {
+    // console.log("update..................");
+    setIsUpdated(flag);
+    // console.log("call update");
+  };
 
-  
- 
-    
   // action
   return (
     <>
       <Navbar />
-      <div className="row mt-5 pt-5 mx-0">
+      <div className="row mt-5 pt-2 mx-0">
         <div className="col-lg-7 col-md-8 col-sm-9 m-auto">
-          <Home action={{update: updateState.bind(this)}} />
+          <Home action={{ update: updateState.bind(this) }} />
         </div>
       </div>
       <div className="row mt-2 mx-0">
@@ -60,15 +64,11 @@ function App() {
               <div className="row mx-0 mb-2">
                 {/*  */}
                 <div className="col-5 px-1">
-                  <h5 className="text-center mb-0">
-                    Url
-                  </h5>
+                  <h5 className="text-center mb-0">Url</h5>
                 </div>
                 {/*  */}
                 <div className="col-5 px-1 ">
-                  <h5 className="text-center mb-0">
-                    Short
-                  </h5>
+                  <h5 className="text-center mb-0">Short</h5>
                 </div>
                 {/*  */}
                 <div className="col-2 px-1">
@@ -78,7 +78,7 @@ function App() {
               </div>
 
               {/* .............. */}
-              <List data={data} action={{update: updateState.bind(this)}} />
+              <List data={data} action={{ update: updateState.bind(this) }} error= {error} />
             </div>
           </div>
         </div>

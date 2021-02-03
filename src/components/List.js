@@ -3,9 +3,8 @@
 import { API_all } from "../config.json";
 
 
-function List({ data ,action }) {
-  // console.log(data);
-
+function List({ data ,action, error }) {
+  
   // action
 //  const copy =(i) =>{
 //     const copyText = document.getElementById(`short${i}`);
@@ -14,12 +13,14 @@ function List({ data ,action }) {
 //     {copyText.setSelectionRange(0, 99999)} /* For mobile devices */
 //     {document.execCommand("copy");}
 //     console.log("Copied!");
-//   }
+//   }  
+  // const dataRev = data.reverse()
 
   return (
     <div>
       {data.length > 0 ? (
-        data.map((info, i) => {
+        // data = data.reverse()
+        data.slice(0).reverse().map((info, i) => {
           return (
             <div key={i} className="card shadow">
               <div className="card-body py-1 px-1">
@@ -62,18 +63,33 @@ function List({ data ,action }) {
           );
         })
       ) : (
-        <div className="card shadow">
+        error ? 
+          (<div className="card shadow">
           <div className="card-body py-1 px-1">
             <div className="row mx-0">
               {/*  */}
               <div className="col px-1">
                 <h5 className="text-center mb-0 text-danger">
+                   Internet Connection Error! 
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>)
+        :
+        (<div className="card shadow">
+          <div className="card-body py-1 px-1">
+            <div className="row mx-0">
+              {/*  */}
+              <div className="col px-1">
+                <h5 className="text-center mb-0 text-secondary">
                   -- No data found --
                 </h5>
               </div>
             </div>
           </div>
-        </div>
+        </div>)
+        
       )}
     </div>
   );

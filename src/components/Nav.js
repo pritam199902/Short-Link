@@ -3,7 +3,7 @@
 function Nav() {
   return (
     <nav
-      className="navbar navbar-light bg-light justify-content-center shadow fixed-top"
+      className="navbar navbar-light bg-light justify-content-center shadow fixed-top py-1"
       style={styles.navbar}
     >
       <div className="container justify-content-center ">
@@ -12,7 +12,7 @@ function Nav() {
           style={{ color: "#faa", fontSize: 26 }}
           href="/"
         >
-          <h3 style={{ fontSize: 30, fontWeight: "bolder", color: '#686' }}>
+          <h4 className="mb-0" style={{ fontSize: 25, fontWeight: "bolder", color: '#686' }}>
             Short
             <img
               src="logo1.png"
@@ -21,7 +21,7 @@ function Nav() {
               className="d-inline-block align-top"
               alt=""
             />Link
-          </h3>
+          </h4>
         </a>
       </div>
     </nav>
