@@ -55,7 +55,7 @@ function Home({ action }) {
       // alert(nanoid(8))
       submit();
     } else {
-      setIsLoading(true);
+      // setIsLoading(true);
       alert("Please enter a valid URL!");
       setOrginalUrl("");
     }
