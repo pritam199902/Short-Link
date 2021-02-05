@@ -50,8 +50,8 @@ function Home({ action }) {
   }
 
   const handleSubmit = () => {
-    setIsLoading(true);
     if (isUrl(orginalUrl)) {
+      setIsLoading(true);
       // alert(nanoid(8))
       submit();
     } else {
